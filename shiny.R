@@ -245,9 +245,8 @@ server <- function(input, output, session) {
        
        p <- ggplot(data = data_filter()) +
          geom_path(data = get_efficiency_frontier(data_filter()), 
-                   aes(points, price), 
+                   aes(points, price, color = "Cost-Effectiveness Frontier"), 
                    alpha=0.5, 
-                   color = "purple", 
                    size = 1) +
          geom_beeswarm(aes(points, price,
                            text = paste(title_wrapped, 
@@ -260,13 +259,14 @@ server <- function(input, output, session) {
                        cex = 1.1, 
                        size = 1.5) +
          theme_bw() +
-         labs(title = "Price vs. Ratings", x = "Rating (score out of 100)", y = "Price (USD)" ) +
+         labs(title = "Price vs. Ratings", x = "Rating (score out of 100)", y = "Price (USD)") +
+         scale_color_manual(name = "",
+                            values = c("Cost-Effectiveness Frontier" = "purple")) +
          scale_y_continuous(
            labels = scales::number_format(accuracy = 0.1)) +
          scale_x_continuous(
            labels = scales::number_format(accuracy = 0.1)) +
-         theme(legend.position="none",
-               panel.border = element_blank(),
+         theme(panel.border = element_blank(),
                panel.grid.major = element_blank(),
                panel.grid.minor = element_blank(),
                axis.line = element_line(colour = "#E8E8E8"),
@@ -276,7 +276,8 @@ server <- function(input, output, session) {
                axis.title.y = element_text(size = 9, colour = '#5a5a5a'),
                plot.title = element_text(hjust = 0.5, size = 11, colour = '#5a5a5a'))
          
-         ggplotly(p, tooltip = "text") # tooltip argument to suppress the default information and just show the custom text
+         ggplotly(p, tooltip = "text") %>% # tooltip argument to suppress the default information and just show the custom text
+           layout(legend = list(orientation = "h", x = 0.4, y = -0.2))
      })
     
 
