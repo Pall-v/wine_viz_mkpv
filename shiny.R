@@ -247,7 +247,7 @@ server <- function(input, output, session) {
          geom_path(data = get_efficiency_frontier(data_filter()), 
                    aes(points, price, color = "Cost-Effectiveness Frontier"), 
                    alpha=0.5, 
-                   size = 1) +
+                   size = .7) +
          geom_beeswarm(aes(points, price,
                            text = paste(title_wrapped, 
                                         "<BR>$",  price,
@@ -261,7 +261,7 @@ server <- function(input, output, session) {
          theme_bw() +
          labs(title = "Price vs. Ratings", x = "Rating (score out of 100)", y = "Price (USD)") +
          scale_color_manual(name = "",
-                            values = c("Cost-Effectiveness Frontier" = "purple")) +
+                            values = c("Cost-Effectiveness Frontier" = "green3")) +
          scale_y_continuous(
            labels = scales::number_format(accuracy = 0.1)) +
          scale_x_continuous(
